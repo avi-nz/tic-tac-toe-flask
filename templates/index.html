@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            border: 1px solid black;
+            font-size: 24px;
+        }
+        button {
+            width: 100%;
+            height: 100%;
+            font-size: 24px;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        {% if not game_running %}
+            <form action="/set_mode" method="post">
+                <button name="mode" value="single">Single Player</button>
+                <button name="mode" value="multi">Multiplayer</button>
+            </form>
+        {% else %}
+            <form action="/move" method="post">
+                <table>
+                    {% for row in range(3) %}
+                        <tr>
+                            {% for col in range(3) %}
+                                <td>
+                                    <button name="move" value="{{ row * 3 + col }}" {{ 'disabled' if board[row * 3 + col] != '-' else '' }}>
+                                        {{ board[row * 3 + col] }}
+                                    </button>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </form>
+        {% endif %}
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+        
+
+
